@@ -1,4 +1,4 @@
-// 1ST DRAFT DATA MODEL
+
 const mongoose = require('mongoose'),
       URLSlugs = require('mongoose-url-slugs');
 
@@ -37,23 +37,9 @@ const Hobbies = new mongoose.Schema({
     icon: String
 });
 
-/* const Wine = new mongoose.Schema({
-	brand: String,
-	name: String,
-	year: String,
-	type: [String],
-	sweetness: [String],
-	comments: [Comment],
-	avgrating: Number,
-	numratings: Number,
-	image: String,
-}); 
-
-Wine.plugin(URLSlugs('brand name year'));*/
-Projects.plugin(URLSlugs('username title id'))
+Projects.plugin(URLSlugs('username title id'));
 
 mongoose.model('User', User);
-// mongoose.model('Wine', Wine);
 mongoose.model('Comment', Comment);
 mongoose.model('Projects', Projects);
 mongoose.model('Hobbies', Hobbies);

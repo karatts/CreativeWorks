@@ -142,27 +142,6 @@ function findAndAddWine2(object2find, winePref1, callback){
 	});
 }
 
-/*function findAndAddWine3(object2find, winePref1, sweetness, res, callback){
-	var p3 = Promise.resolve(Wine.find(object2find, (err, result, count) => {
-			if(err){
-				console.log(err);
-			}
-			else{
-				result.forEach((ele) => {
-					if(winePref1.includes(ele) !== true){
-						winePref1.push(ele);
-					}
-				});
-				//console.log(winePref1);
-			}
-		}));
-	Promise.all([p3]).then(values => {
-		console.log(values[0]);
-		//console.log(sweetness);
-		callback(object2find.type, sweetness, values[0], res);
-	});
-}*/
-
 function createAWine(brand, name, year, type, sweetness, image, rating, numrating, comments){
 	if(image === ""){
 		image = "../images/No-image-available.jpg";
@@ -567,18 +546,6 @@ router.get('/allthewine', (req, res) => {
 	}
 });
 
-/*function addThis(typePref, sweetness, array2, res){
-	if(sweetness.length !== 0){
-		let pref = sweetness.shift();
-			//console.log(array2);
-			findAndAddWine3({type: typePref, sweetness: pref}, array2, sweetness, addThis);
-	}
-	else{
-		console.log(array2);
-		res.render('suggested', {wine: array2});
-	}
-}*/
-
 router.get('/suggested', (req, res) => {
 	console.log('in router.get /suggested');
 	let sessID = req.session.username;
@@ -598,13 +565,6 @@ router.get('/suggested', (req, res) => {
 				}
 				else{
 					//there's one or more sweetness preferences
-					/*var array = [];
-					let sweetness = result.sweetness.slice();
-					//console.log(sweetness);
-					while(sweetness.length !== 0){
-						let pref = sweetness.shift();
-						findAndAddWine3({type: result.type[0], sweetness: pref}, array, sweetness, res, addThis(result.type[0], sweetness, array, res));
-					}*/
 					findAndAddWine2({type: result.type[0], sweetness: result.sweetness}, [], function renderThis(array2){
 						res.render('suggested', {wine: array2});
 					});
@@ -744,4 +704,4 @@ router.get('/logout', (req, res) => {
 //--------------------------------
 
 //listen on port 3000
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8080);
