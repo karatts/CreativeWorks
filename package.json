@@ -1,0 +1,31 @@
+{
+  "name": "CreativeWorks",
+  "version": "0.0.1",
+  "description": "Social networking web app for Hobbyists",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karatts/CreativeWorks"
+  },
+  "author": "Kara Tong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/karatts/CreativeWorks/issues"
+  },
+  "homepage": "https://github.com/karatts/CreativeWorks#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
+    "bootstrap": "^3.3.7",
+    "eslint": "^3.18.0",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "hbs": "^4.0.4",
+    "mongoose": "^4.9.3",
+    "mongoose-url-slugs": "^0.2.1",
+    "path": "^0.12.7"
+  }
+}
