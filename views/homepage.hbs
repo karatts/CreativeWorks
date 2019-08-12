@@ -48,9 +48,11 @@
   <center><h5>Some of the Communities Our Users Love</h5></center>
   <div class="row" id="bottCarHob">
   {{#each Hobby}}
-  <div class="card" id="fpCards" style="width: 12rem;">
+  <div class="card" id="fpCards" style="width: 12rem; background-color: #f6f5f3 !important;">
   <div class="card-body">
-    <h6 class="card-subtitle mb-2 text-muted">{{this.name}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">{{this.name}} <span class="seeMoreGT"><a href="/hobbies/{{this.slug}}">&gt;</a></span></h6>
+    <p class="card-info">{{this.description}}</p>
+    <span class="seeMoreCard">... <a href="/hobbies/{{this.slug}}">read more</a></span>
   </div>
 </div>
 {{/each}}

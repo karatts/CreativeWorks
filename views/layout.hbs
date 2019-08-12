@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +15,7 @@
 
   </head>
 
-  <body>
+  <body style="height: auto">
   {{#if noid}}
     <header>
       <div class="container">
@@ -84,7 +84,7 @@
           <div class="btn btn-outline-info navbar" id="login">{{session}}</div>
           <div class="dropdown-menu" id="loginDropDown">
          	  <a class="dropdown-item" href="/user/{{session}}">Profile</a>
-            <a class="dropdown-item" href="/projects/{{session}}">Projects</a>
+            <a class="dropdown-item" href="/user/{{session}}/projects">Projects</a>
             <a class="dropdown-item" href="/user/{{session}}/hobbies">Interests</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/help">Help</a>

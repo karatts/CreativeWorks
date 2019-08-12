@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const Handlebars = require('handlebars');
 const bodyParser = require('body-parser');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -14,6 +15,7 @@ const sessionOptions = {
 	resave: true,
 	saveUninitialized: true
 };
+
 app.use(session(sessionOptions));
 //body-parser
 app.use(bodyParser.urlencoded({extended: false}));
@@ -105,6 +107,7 @@ router.get('/', (req, res) => {
 			var fPH = 0;
 			const frontPageHobbies = [];
 			const intsChosen = [];
+			const shortDes = [];
 			while(fPH<5){
 				const val = Math.floor(Math.random() * (results.length-1));
 				if(!intsChosen.includes(val)){
@@ -255,73 +258,21 @@ router.post('/login', (req, res) => {
 	});
 });
 
-//add a wine to the database!
-router.get('/addawine', (req, res) => {
-	console.log("at router.get /addawine");
+//go to hobbies page!
+router.get('/hobbies', (req, res) => {
+	console.log("at router.get /hobbies");
 	const sessID = req.session.username;
-	if(sessID === undefined){
-		//not logged in
-		res.redirect('/login');
-	}
-	else{
-		//logged in
-		res.render('addawine', {start: true});
-	}
-});
 
-router.post('/addawine', (req, res) => {
-	console.log("at router.post /addawine");
-	let brand = req.body.brand;
-	brand = capFirst(brand);
-	let name = req.body.name;
-	name = capFirst(name);
-
-	Wine.find({brand: brand, name: name, year: req.body.year}, (err, result, count) =>{
-		if(result.length !== 0){
-			//don't add the wine
-			res.render('addawine', {exists: true, wine: result[0]});
+	Hobby.find({}, (err, results, count) => {
+		if(err){
+			console.log(err);
 		}
-		else{
-			let image = "";
-			if(req.body.image === ""){
-				image = "../images/No-image-available.jpg";
-			}
-			else{
-				image = req.body.image;
-			}
-			const newWine = new Wine({
-				brand: brand,
-				name: name,
-				year: req.body.year,
-				type: req.body.type,
-				sweetness: req.body.sweetness,
-				image: image,
-				comments: [],
-				avgrating: 0,
-				numratings: 0,
-			});
-			//add the wine
-			newWine.save((err) =>{
-				if(err){
-					console.log("Error saving new wine...");
-				}
-				else{
-					let addString = req.session.username + " added a " + newWine.year + " " + newWine.name + " from " + newWine.brand + " to the DB! #WineNotDB";
-					client.post('statuses/update', {status: addString},  function(error, tweet, response) {
-  						if(error) throw error;
-				  		//console.log(tweet);  // Tweet body. 
-				  		//console.log(response);  // Raw response object. 
-					});
-
-					res.render('addawine', {success: true, wine: newWine});
-				}
-			});
-		}
+		res.render('hobbies', {noid: (sessID === undefined), Hobby: results});
 	});
 });
 
 //Wine slug --- WIP
-router.get("/wine/:slug", (req, res) => {
+router.get("/hobbies/:slug", (req, res) => {
 	let sessID = req.session.username;
 	console.log("at router.get /wine/slug");
 	const slug = req.params.slug;

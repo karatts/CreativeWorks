@@ -38,7 +38,7 @@ const User = new mongoose.Schema({
   projects: [Project]
 });
 
-Project.plugin(URLSlugs('id'));
+Project.plugin(URLSlugs('username/id'));
 User.plugin(URLSlugs('username'));
 Hobby.plugin(URLSlugs('name'));
 
