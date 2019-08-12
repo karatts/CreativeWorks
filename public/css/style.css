@@ -1,0 +1,152 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, img, small, strong, ol, ul, li, form, label, table, caption, tr, td, footer, header {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+footer, header, menu, nav, section {
+  display: block;
+}
+
+header{
+  background-color: #fffefd;
+  color: #f78e81;
+}
+
+header #logo{
+  float: left;
+  max-width: 30%;
+  height: auto;
+  padding: 15px;
+}
+
+div#carousel.container{
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.container{
+  max-width: 100% !important;
+}
+
+body{
+  background-color: white !important;
+}
+
+footer{
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  bottom: 0;
+  background-color: #5d5e61;
+  color: white;
+}
+
+#footer{
+  padding-top: 37px;
+  padding-left: 20px;
+}
+
+body {
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+}
+
+a:focus {
+  outline: 0;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+#navBar{
+  position: relative;
+}
+
+#login{
+  float: right;
+  color: #7596b0;
+  margin-top: 6%;
+  margin-right: 10px;
+  top:50%;
+  transform: translateY(11%);
+}
+
+#login:hover{
+  color: white;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+#loginDropDown{
+  right: 0px;
+  top: 47px;
+  contain: content;
+}
+
+/* TEXT ATTRIBUTES */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  size: 14px;
+  line-height: 1.6em;
+  color: #666666;
+}
+
+a {
+  color: #dc5333;
+}
+
+a:hover {
+  color: #c64121;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.5em;
+  margin-bottom: 15px;
+  color: #383838;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  font-size: 16px;
+}
+
+h6 {
+  font-size: 14px;
+}
+
+/* Dropdown menu */
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}

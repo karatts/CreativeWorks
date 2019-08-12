@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="icon" href="../images/RW-icons-home-lightbulb.png">
+    <title>CreativeWorks</title>
+    <style type="text/css"></style>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+  </head>
+
+  <body>
+  {{#if noid}}
+    <header>
+      <div class="container">
+        <div class="row">
+        <div class="col-4">
+        <div class="dropdown">
+          <img src="/images/Logo.PNG" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; padding: 10px;">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         	  <a class="dropdown-item" href="/">Home</a>
+            <a class="dropdown-item" href="/hobbies">Hobbies</a>
+            <div class="dropdown-divider"></div>
+         	  <a class="dropdown-item" href="/login">Login</a>
+         	  <a class="dropdown-item" href="/register">Register</a>
+          </div>
+          </div>
+        </div>
+        <div class="col-3"></div>
+        <div class="col-5" id="navBar">
+          <div class="dropdown">
+          <div class="btn btn-outline-info navbar" id="login">Login</div>
+          <div class="dropdown-menu" id="loginDropDown">
+            <form class="px-4 py-3">
+              <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+              </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">New around here? Sign up</a>
+          <a class="dropdown-item" href="#">Forgot password?</a>
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </header>
+
+  {{/if}}
+  
+
+  {{#if id}}
+    <header>
+      <div class="container">
+        <div id="logo">
+          <img src="/images/Logo.PNG">
+        </div>
+        <nav>
+        <ul class="nav justify-content-end" id="navbar">
+         	<li><a class="navlink" href="/">Home</a></li>
+          <li><a class="navlink" href="/hobbies">Hobbies</a></li>
+          <li><a class="navlink" href="/profile/{{session}}">{{session}}</a></li>
+     	  </ul>
+        </nav>
+        </div>
+    </header>
+  {{/if}}
+
+    {{{body}}}
+
+
+    <footer class="footer">
+      <div id="footer">Kara Tong  &copy; 2019 CreativeWorks, Inc.</div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+  </body>
+</html>

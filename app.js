@@ -4,19 +4,6 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const bcrypt = require('bcrypt');
-//const Twitter = require('twitter');
-
-//twitter
-//var fs = require('fs');
-//var fn = path.join(__dirname, 'twitter.json');
-//var data = fs.readFileSync(fn);
-//var conf = JSON.parse(data);
-//var client = new Twitter({
-//  consumer_key: conf.key,
-//  consumer_secret: conf.secret,
-//  access_token_key: conf.tokenkey,
-//  access_token_secret: conf.tokensecret 
-//});
 
 //express
 const app = express();
@@ -29,7 +16,7 @@ const sessionOptions = {
 };
 app.use(session(sessionOptions));
 //body-parser
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 // express static setup
 app.use(express.static(path.join(__dirname, 'public')));
 // hbs setup
@@ -40,14 +27,11 @@ require('./db');
 
 mongoose.Promise = global.Promise;
 const User = mongoose.model("User");
-const Wine = mongoose.model("Wine");
+const Hobby = mongoose.model("Hobby");
 const Comment = mongoose.model("Comment");
+const Project = mongoose.model("Project");
 
 //User.remove({}, function(err) { 
-//   console.log('collection removed') 
-//});
-
-//Wine.remove({}, function(err) { 
 //   console.log('collection removed') 
 //});
 
@@ -60,108 +44,20 @@ function capFirst(str) {
 function getNum(first, last){
 	return Math.floor(Math.random() * ((last) - first + 1) + first);
 }
-function checkWines(num, addWine, numArray, wineArray){
-	if(numArray.includes(num) === false){
-		wineArray.push(addWine);
-		numArray.push(num);
+function createAHobby(name, description, icon){
+	if(icon === ""){
+		icon = "../images/No-image-available.jpg";
 	}
-}
-function findAndAddWine(object2find, winePref1, length, res, sessID){
-	Wine.find(object2find, (err, result, count) => {
-		if(err){
-			console.log(err);
-		}
-		else{
-			let addedNums = [];
-			if(result.length < length){
-				result.forEach((ele) => {
-					winePref1.push(ele);
-				});
-				const spliceNum = (length - result.length)+1;
-				let winePref2 = winePref1.splice(0,spliceNum);
-
-				if(winePref1.length < winePref2.length){
-					const temp = winePref1;
-					winePref1 = winePref2;
-					winePref2 = temp;
-				}
-
-				res.render('homepage', {id: true, session: sessID, wine1: winePref1, wine2: winePref2});
-			}
-			else{
-				while(addedNums.length < length){
-					let num = getNum(0, (result.length - 1));
-					checkWines(num, result[num], addedNums, winePref1);
-				}
-				var count = 0;
-				let newWine1 = winePref1.filter(function(ele){
-					if(count < 3){
-						count = count + 1;
-						return ele;
-					}
-				});
-				count = 0;
-				let newWine2 = winePref1.filter(function(ele){
-					if(count >= 3 && count < 6){
-						count = count + 1;
-						return ele;
-					}
-					else{
-						count = count + 1;
-					}
-				});
-				if(newWine1.length < newWine2.length){
-					const temp = newWine1;
-					newWine1 = newWine2;
-					newWine2 = temp;
-				}
-				res.render('homepage', {id: true, session: sessID, wine1: newWine1, wine2: newWine2});
-			}
-		}
-	});
-}
-
-function findAndAddWine2(object2find, winePref1, callback){
-	var p3 = Promise.resolve(Wine.find(object2find, (err, result, count) => {
-			if(err){
-				console.log(err);
-			}
-			else{
-				result.forEach((ele) => {
-					//console.log(winePref1);
-					//console.log(winePref1.includes(ele));
-					if(winePref1.includes(ele) === false){
-						winePref1.push(ele);
-					}
-				});
-			}
-		}));
-	Promise.all([p3]).then(values => {
-		//console.log(values[0]);
-		callback(values[0]);
-	});
-}
-
-function createAWine(brand, name, year, type, sweetness, image, rating, numrating, comments){
-	if(image === ""){
-		image = "../images/No-image-available.jpg";
-	}
-	const wine = new Wine({
-		brand: brand,
+	const hobby = new Hobby({
 		name: name,
-		year: year,
-		type: type,
-		sweetness: sweetness,
-		image: image,
-		avgrating: rating,
-		numratings: numrating,
-		comments: comments,
+		description: description,
+		icon: icon
 	});
-	Wine.find({brand: wine.brand, name: wine.name, year: wine.year}, (err, results, count) =>{
+	Hobby.find({name: hobby.name}, (err, results, count) =>{
 		if(results.length === 0){
-			wine.save((err) => {
-				//console.log("in here");
+			hobby.save((err) => {
 				if(err){
+					console.log("error with adding hobby:"+hobby.name);
 					console.log(err);
 				}
 			});
@@ -170,13 +66,20 @@ function createAWine(brand, name, year, type, sweetness, image, rating, numratin
 }
 
 //-----------------------------------------------------------
-// Starter wines
-function addStarterWines(){
-	createAWine("Mascota Vineyards", "Unanime", "2013", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png", 93, 2, [{username: "WineCrazy21", comment: "I loved this wine! It was so great that I didn't even want to share it with my friends!", rating: 97}, {username: "Fran", comment: "Good recommendation and affordable. Would buy again.", rating: 89}]);
-	createAWine("Chateau Dalem", "Fronsac", "2014", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png", 91, 3, [{username: "Drinks4Gran", comment: "GRANNIES 4 DRINKS CLUB LOVE THIS", rating: 85}, {username: "CatLady", comment: "Yum Yum!", rating: 98}, {username: "Gerod89", comment: "great pairing with fish", rating: 90}]);
-	createAWine("Dr Heidemanns", "Riesling Qba", "2015", "White Wine", ["Semi-Sweet", "Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png", 88, 1, [{username: "banana4scale", comment: "Smoky flavor and the bottle could probably fit 5 bananas", rating: 88}]);
-	createAWine("Renieri", "Invetro", "2013", "Red Wine", ["Dry"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91, 2, [{username: "Clementine", comment: "i thought it was good. tbh, probs would rec to my friends.", rating: 89}, {username: "Cecile219", comment: "Fantastic!", rating: 93}]);
-	createAWine("Olema", "Chardonnay Sonoma", "2014", "White Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91, 1, [{username: "Wineacc", comment: "Great wine for a good time! All my guests loved it.", rating: 91}]);
+// General hobbies
+function addGeneralHobbies(){
+	createAHobby("Baking", "Baking is a type of cooking, a hobby devoured by many. Baking usually consists of using the oven, sometimes the stove. There's many different food items you can bake, such as cake, muffins, cookies, pies, and much more.", "../images/Hobbies/Baking.PNG");
+	createAHobby("Trading Cards", "A trading card (or collectible card) is a small card, usually made out of paperboard or thick paper, which usually contains an image of a certain person, place or thing (fictional or real) and a short description of the picture, along with other text (attacks, statistics, or trivia).", "../images/Hobbies/CardCollecting.PNG");
+	createAHobby("Cars", "Auto restoration is the process of rebuilding an automobile that is one of many stages of disrepair and bringing it back to the life and luster than it exhibited when it was new. From classic cars to modern automobiles, auto restoration covers the entire gambit of all vehicles that were ever manufactured.", "../images/Hobbies/Cars.PNG");
+	createAHobby("Coin Collecting", "Coin collecting, also called numismatics, the systematic accumulation and study of coins, tokens, paper money, and objects of similar form and purpose. The collecting of coins is one of the oldest hobbies in the world.", "../images/Hobbies/CoinCollecting.PNG");
+	createAHobby("Drawing", "You can create art anywhere as long as you have two things: pencils and paper. It's good to start at a young age because it gives you a chance to start using your brain and to be creative. Also, it is an opportunity to challenge thinking skills and develop learning skills.", "../images/Hobbies/Drawing.PNG");
+	createAHobby("Drones", "A drone is, of course, a complicated piece of kit and so the users creativity is not only used, but their mechanical and software engineering skills also (if they choose to). In one relatively small package, the UAV brings together the creative and engineering world together in perfect harmony (cue the fan fares).", "../images/Hobbies/DroneBuilding.PNG");
+	createAHobby("Embroidery", "It’s truly amazing what can be created with just a thread and needle. Embroidery has been around for centuries, and it continues to be a popular hobby among folks of all ages across the globe.", "../images/Hobbies/HandSewing.PNG");
+	createAHobby("Jewelry Making", "As a hobby, jewelry design can be as expensive or as inexpensive as you want, depending on what kind of jewelry you intend to make – ranging from simple wire jewelry to intricate items with metals and precious stones. ... This could be gemstones, precious metals or other material you will work with.", "../images/Hobbies/JewelryMaking.PNG");
+	createAHobby("Knitting", "If you’re thinking of taking up knitting, I invite you to go for it! Knitting is an amazingly addictive hobby. You’ll be stunned by what you are able to create with a skein of yarn and two needles.", "../images/Hobbies/Knitting.PNG");
+	createAHobby("Painting", "Painting as a hobby can be relaxing in a stress filled life. It can be an escape into another world, a world of calm. Anyone can pick painting up as a hobby and enjoy it. One will not find themself dealing with boredom when taking up painting.", "../images/Hobbies/Painting.PNG");
+	createAHobby("Pottery", "Ceramic art covers the art of pottery which is made by forming a clay body into objects of a special shape and then heating them to a certain temperature in a kiln to create a reaction that leads to their strength and hardening.", "../images/Hobbies/Pottery.PNG");
+	createAHobby("Sewing", "Sewing is seen by many as a dying art but it can be a very relaxing and rewarding hobby, as you are able to create beautiful masterpieces and repair clothes. Sewing can be used to tailor clothes, create quilts, bags or just about anything. You can even learn to decorate and personalize a variety of different items.", "../images/Hobbies/Sewing.PNG");
 }
 //-----------------------------------------------------------
 
@@ -188,53 +91,13 @@ router.get('/', (req, res) => {
 	const sessID = req.session.username;
 
 	if(start){
-		addStarterWines();
+		addGeneralHobbies();
 		start = false;
-		console.log('Adding startup wines');
+		console.log('Adding initial hobbies');
 	}
 
 	if(sessID === undefined){
-		let winehp = [];
-		Wine.find({}, (err, result, count) => {
-			//console.log(result);
-			if(err){
-				console.log(err);
-			}
-			else{
-				let numAdded = [];
-				if(result.length < 5){
-					return res.redirect('/');
-					next();
-				}
-				else{
-					while(numAdded.length < 5){	
-						let num = getNum(0, (result.length-1));
-						checkWines(num, result[num], numAdded, winehp);
-					};
-				}
-			}
-			var count = 0;
-			const newWine4 = winehp.filter(function(ele){
-				if(count < 3){
-					count = count + 1;
-					return ele;
-				}
-			});
-			count = 0;
-			const newWine3 = winehp.filter(function(ele){
-				if(count >= 3 && count < 5){
-					count = count + 1;
-					return ele;
-				}
-				else{
-					count = count + 1;
-				}
-			});
-			res.render('homepage', {noid: true, wine1: newWine4, wine2: newWine3});
-			//if(result.length === 5){
-			//	res.redirect('/');
-			//}
-		});
+		res.render('homepage', {noid: true});
 	}
 	else{
 		const sessID2 = sessID.toLowerCase();

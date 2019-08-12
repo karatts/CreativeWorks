@@ -3,24 +3,13 @@ const mongoose = require('mongoose'),
       URLSlugs = require('mongoose-url-slugs');
 
 // define the data in our collection
-const User = new mongoose.Schema({
-  username: {type: String, unique: true},
-  fname: String,
-  lname: String,
-  password: String,
-  joinDate: Date,
-  hobbies: [String],
-  Friends: [String],
-  project: [Projects]
-});
-
 const Comment = new mongoose.Schema({
 	username: String,
 	comment: String,
     timePosted: Date
 });
 
-const Projects = new mongoose.Schema({
+const Project = new mongoose.Schema({
     username: String,
     title: String,
 	image: String,
@@ -28,21 +17,35 @@ const Projects = new mongoose.Schema({
     comments: [Comment],
     timePosted: Date,
     hobbyCategory: String,
-    id: Number
+    id: {type: Number, unique: true}
 });
 
-const Hobbies = new mongoose.Schema({
-    name: String,
+const Hobby = new mongoose.Schema({
+    name: {type: String, unique: true},
     description: String,
     icon: String
 });
 
-Projects.plugin(URLSlugs('username title id'));
+const User = new mongoose.Schema({
+  username: {type: String, unique: true},
+  fname: String,
+  lname: String,
+  password: String,
+  joinDate: Date,
+  bio: String,
+  hobbies: [Hobby],
+  friends: [String],
+  projects: [Project]
+});
+
+Project.plugin(URLSlugs('id'));
+User.plugin(URLSlugs('username'));
+Hobby.plugin(URLSlugs('name'));
 
 mongoose.model('User', User);
 mongoose.model('Comment', Comment);
-mongoose.model('Projects', Projects);
-mongoose.model('Hobbies', Hobbies);
+mongoose.model('Project', Project);
+mongoose.model('Hobby', Hobby);
 
 
 // is the environment variable, NODE_ENV, set to PRODUCTION? 
