@@ -32,7 +32,7 @@
           </div>
           </div>
         </div>
-        <div class="col-3"></div>
+        <div class="col-2"></div>
         <div class="col-5" id="navBar">
           <div class="dropdown">
           <div class="btn btn-outline-info navbar" id="login">Login</div>
@@ -54,6 +54,9 @@
         </div>
         </div>
         </div>
+        <div class="col-1" id="signUpNav">
+          <button class="btn btn-outline-danger navbar" id="signUp" style="border-color: #f78e81; color: #f78e81;">Sign Up</div>
+        </div>
       </div>
       </div>
     </header>
@@ -64,17 +67,34 @@
   {{#if id}}
     <header>
       <div class="container">
-        <div id="logo">
-          <img src="/images/Logo.PNG">
+        <div class="row">
+        <div class="col-4">
+        <div class="dropdown">
+          <img src="/images/Logo.PNG" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; padding: 10px;">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         	  <a class="dropdown-item" href="/">Home</a>
+            <a class="dropdown-item" href="/hobbies">Interests</a>
+            <a class="dropdown-item" href="/browse/projects">Projects</a>
+          </div>
+          </div>
         </div>
-        <nav>
-        <ul class="nav justify-content-end" id="navbar">
-         	<li><a class="navlink" href="/">Home</a></li>
-          <li><a class="navlink" href="/hobbies">Hobbies</a></li>
-          <li><a class="navlink" href="/profile/{{session}}">{{session}}</a></li>
-     	  </ul>
-        </nav>
+        <div class="col-4"></div>
+        <div class="col-4" id="navBarLoggedIn">
+          <div class="dropdown">
+          <div class="btn btn-outline-info navbar" id="login">{{session}}</div>
+          <div class="dropdown-menu" id="loginDropDown">
+         	  <a class="dropdown-item" href="/user/{{session}}">Profile</a>
+            <a class="dropdown-item" href="/projects/{{session}}">Projects</a>
+            <a class="dropdown-item" href="/user/{{session}}/hobbies">Interests</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/help">Help</a>
+            <a class="dropdown-item" href="/settings">Settings</a>
+            <a class="dropdown-item" href="/logout">Log Out</a>
+          </div>
         </div>
+        </div>
+        </div>
+      </div>
     </header>
   {{/if}}
 

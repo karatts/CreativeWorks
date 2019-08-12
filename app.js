@@ -97,7 +97,24 @@ router.get('/', (req, res) => {
 	}
 
 	if(sessID === undefined){
-		res.render('homepage', {noid: true});
+		Hobby.find({}, (err, results, count) => {
+			if(err){
+				console.log(err);
+			}
+			//send 5 random hobbies to the front page
+			var fPH = 0;
+			const frontPageHobbies = [];
+			const intsChosen = [];
+			while(fPH<5){
+				const val = Math.floor(Math.random() * (results.length-1));
+				if(!intsChosen.includes(val)){
+					intsChosen[fPH] = val;
+					frontPageHobbies[fPH] = results[val];
+					fPH++;
+				}
+			}
+			res.render('homepage', {noid: true, Hobby: frontPageHobbies});
+		});
 	}
 	else{
 		const sessID2 = sessID.toLowerCase();
