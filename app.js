@@ -157,19 +157,19 @@ router.get('/', (req, res) => {
 
 //register form
 //get - to display the form
-router.get('/register', (req, res) => {
-	console.log('in router.get /register');
+router.get('/signup', (req, res) => {
+	console.log('in router.get /signup');
 	const sessID = req.session.username;
 	if(sessID === undefined){
-		res.render('register', {});
+		res.render('signup', {noid: true});
 	}
 	else{
-		res.render('loggedin', {id: sessID});
+		res.render('homepage', {id: sessID});
 	}
 });
 //post - to process the form input
-router.post('/register', (req, res) => {
-	console.log('in router.post /register');
+router.post('/signup', (req, res) => {
+	console.log('in router.post /signup');
 	const testPW = req.body.password;
 	let testUN = req.body.username;
 	User.findOne({username: testUN}, (err, result, count) => {
@@ -179,7 +179,7 @@ router.post('/register', (req, res) => {
 			unerr = true;
 		}
 		if(pwerr || unerr){
-			res.render('register', {error: true, pwerror: pwerr, unerror: unerr});
+			res.render('signup', {pwerror: pwerr, unerror: unerr});
 		}
 		else{
 			bcrypt.hash(testPW, 10, function(err, hash) {
@@ -188,9 +188,7 @@ router.post('/register', (req, res) => {
 					username: testUN,
 					fname: req.body.fname,
 					lname: req.body.lname,
-					password: hash,
-					type: req.body.type,
-					sweetness: req.body.sweetness,
+					password: hash
 				});
 				usr.save((err) => {
 					if(err){
@@ -218,24 +216,22 @@ router.get('/login', (req, res) => {
 	console.log('in app.get /login');
 	const sessID = req.session.username;
 	if(sessID === undefined){
-		res.render('login', {});
+		res.render('login', {noid: true});
 	}
 	else{
-		res.render('loggedin', {id: sessID});
+		res.render('homepage', {id: sessID});
 	}
 });
 router.post('/login', (req, res) => {
 	let name = req.body.username;
 	name = name.toLowerCase();
 	User.findOne({username: name}, (err, result, count) => {
-		const userlog = {unerror: false, pwerror: false};
 		if(result && !err){
 			//test password now
 			bcrypt.compare(req.body.password, result.password, (err, result) =>{
 				if(!result){
 					console.log('Invalid password');
-					userlog.pwerror = true;
-					res.render('login', userlog);
+					res.render('login', {error: true});
 				}
 				else{
 					//start an authenticated session
@@ -252,8 +248,7 @@ router.post('/login', (req, res) => {
 			});
 		}
 		else{
-			userlog.unerror = true;
-			res.render('login', userlog);
+			res.render('login', {error:true});
 		}
 	});
 });
@@ -267,11 +262,16 @@ router.get('/hobbies', (req, res) => {
 		if(err){
 			console.log(err);
 		}
-		res.render('hobbies', {noid: (sessID === undefined), Hobby: results});
+		if(sessID === undefined){
+			res.render('hobbies', {noid: true, Hobby: results});
+		}
+		else{
+			res.render('hobbies', {id: sessID, Hobby: results});
+		}
 	});
 });
 
-//Wine slug --- WIP
+//Hobbies slug --- WIP
 router.get("/hobbies/:slug", (req, res) => {
 	let sessID = req.session.username;
 	console.log("at router.get /wine/slug");

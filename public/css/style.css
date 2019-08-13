@@ -16,6 +16,17 @@ header{
   color: #f78e81;
 }
 
+input{
+  padding: 12px 20px !important;
+  margin: 8px 0 !important;
+  display: inline-block !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
+  height: 50px !important;
+  font-size: 1rem !important;
+}
+
 header #logo{
   float: left;
   max-width: 30%;
@@ -90,6 +101,7 @@ a:hover {
   margin-top: 6%;
   top:23%;
   transform: translateY(11%);
+  width: 87px;
 }
 
 #signUpNav{
