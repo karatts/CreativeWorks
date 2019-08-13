@@ -1,0 +1,80 @@
+<style>
+    #signUpBody{
+        background-image: url(/images/SignUI-2.jpg);
+        background-size: cover;
+    }
+
+    #signUpJumbo{
+        margin-top: 20px;
+        margin-bottom: 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        opacity: 0.95;
+    }
+
+    .form-group{
+        margin-bottom: 18px !important;
+    }
+
+    header{
+        display: none !important;
+    }
+
+    #newHeader{
+        height: 41px;
+    }
+
+    #userExists{
+        float: right;
+        margin-top: 7px;
+    }
+
+    #userExists a{
+        color: #f78e81;
+    }
+
+    #userExists a:hover{
+        color: #7596b0;
+    }
+</style>
+
+<div class="container" id="newHeader">
+    <a href="/"><img src="/images/CreativeWorks.png" style="height: 50%; margin: 10px;"></a>
+    <span id="userExists">Already have an account? <a href="/login">Login</a></span>
+</div>
+
+<div class="container" id="signUpBody">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+    <div class="jumbotron" id="signUpJumbo">
+    <div class="container" style="text-align: center;">
+        <img src="/images/icon.png" style="height: 75px;"><h2>Sign Up</h2></div>
+    <form method="POST" action="">
+        <div class="form-group row">
+		<label>First Name:</label>
+        <input class="form-control" placeholder="First Name" name="fname" required>
+        </div>
+        <div class="form-group row">
+		<label>Last Name:</label> 
+        <input class="form-control" placeholder="Last Name" name="lname" required>
+        </div>
+        <div class="form-group row">
+		<label>Username:</label> 
+        <input class="form-control" placeholder="Username" name="username" required>
+        {{#if unerror}}<small id="passwordHelpInline" style="color: red">The username you entered is already being used.</small>{{/if}}
+        </div>
+        <div class="form-group row">
+		<label>Password:</label> 
+        <input type="password" class="form-control" placeholder="Password" name="password" required>
+        <small id="passwordHelpInline" class="text-muted">Must be at least 8 characters long. </small>
+        {{#if pwerror}}<small id="passwordHelpInline" style="color: red"> Password is not 8 characters long.</small>{{/if}}
+		</div>
+		<input type="submit"><br>
+    </form>
+    </div>
+    </div>
+    <div class="col-2"></div>
+    </div>
+</div>
+<div style="height: 80px;"></div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%;">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,13 +9,13 @@
     <title>CreativeWorks</title>
     <style type="text/css"></style>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/bootstrap-responsive.css" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/bootstrap-responsive.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 
   </head>
 
-  <body>
+  <body style="height: auto">
   {{#if noid}}
     <header>
       <div class="container">
@@ -28,31 +28,34 @@
             <a class="dropdown-item" href="/hobbies">Hobbies</a>
             <div class="dropdown-divider"></div>
          	  <a class="dropdown-item" href="/login">Login</a>
-         	  <a class="dropdown-item" href="/register">Register</a>
+         	  <a class="dropdown-item" href="/signup">Register</a>
           </div>
           </div>
         </div>
-        <div class="col-3"></div>
+        <div class="col-2"></div>
         <div class="col-5" id="navBar">
           <div class="dropdown">
           <div class="btn btn-outline-info navbar" id="login">Login</div>
           <div class="dropdown-menu" id="loginDropDown">
             <form class="px-4 py-3">
               <div class="form-group">
-                <label for="exampleDropdownFormEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                <label>Username</label>
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Username">
               </div>
               <div class="form-group">
-                <label for="exampleDropdownFormPassword1">Password</label>
+                <label>Password</label>
                 <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
               </div>
               <button type="submit" class="btn btn-primary">Sign in</button>
             </form>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">New around here? Sign up</a>
+          <a class="dropdown-item" href="/signup">New around here? Sign up</a>
           <a class="dropdown-item" href="#">Forgot password?</a>
         </div>
         </div>
+        </div>
+        <div class="col-1" id="signUpNav">
+          <a href="/signup" class="btn btn-outline-danger navbar" tabindex="-1" role="button" id="signUp" style="border-color: #f78e81; color: #f78e81;">Sign Up</a></div>
         </div>
       </div>
       </div>
@@ -64,17 +67,34 @@
   {{#if id}}
     <header>
       <div class="container">
-        <div id="logo">
-          <img src="/images/Logo.PNG">
+        <div class="row">
+        <div class="col-4">
+        <div class="dropdown">
+          <img src="/images/Logo.PNG" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; padding: 10px;">
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         	  <a class="dropdown-item" href="/">Home</a>
+            <a class="dropdown-item" href="/hobbies">Hobbies</a>
+            <a class="dropdown-item" href="/browse/projects">Projects</a>
+          </div>
+          </div>
         </div>
-        <nav>
-        <ul class="nav justify-content-end" id="navbar">
-         	<li><a class="navlink" href="/">Home</a></li>
-          <li><a class="navlink" href="/hobbies">Hobbies</a></li>
-          <li><a class="navlink" href="/profile/{{session}}">{{session}}</a></li>
-     	  </ul>
-        </nav>
+        <div class="col-4"></div>
+        <div class="col-4" id="navBarLoggedIn">
+          <div class="dropdown">
+          <div class="btn btn-outline-info navbar" id="login">{{id}}</div>
+          <div class="dropdown-menu" id="loginDropDown">
+         	  <a class="dropdown-item" href="/user/{{id}}">Profile</a>
+            <a class="dropdown-item" href="/user/{{id}}/projects">Projects</a>
+            <a class="dropdown-item" href="/user/{{id}}/hobbies">Interests</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/help">Help</a>
+            <a class="dropdown-item" href="/settings">Settings</a>
+            <a class="dropdown-item" href="/logout">Log Out</a>
+          </div>
         </div>
+        </div>
+        </div>
+      </div>
     </header>
   {{/if}}
 
@@ -91,8 +111,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
 
   </body>
 </html>

@@ -16,6 +16,17 @@ header{
   color: #f78e81;
 }
 
+input{
+  padding: 12px 20px !important;
+  margin: 8px 0 !important;
+  display: inline-block !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
+  height: 50px !important;
+  font-size: 1rem !important;
+}
+
 header #logo{
   float: left;
   max-width: 30%;
@@ -27,20 +38,24 @@ div#carousel.container{
   width: 100%;
   margin: 0px;
   padding: 0px;
+  display: contents;
 }
 
 .container{
   max-width: 100% !important;
+  height: 100%;
 }
 
 body{
   background-color: white !important;
+  width: auto;
 }
 
 footer{
-  position: absolute;
+  position: fixed;
+  left: 0;
   width: 100%;
-  height: 100px;
+  height: 80px;
   bottom: 0;
   background-color: #5d5e61;
   color: white;
@@ -66,6 +81,11 @@ a:hover {
 
 #navBar{
   position: relative;
+  padding-right: 0px;
+}
+
+#navBarLoggedIn{
+  position: relative;
 }
 
 #login{
@@ -77,6 +97,24 @@ a:hover {
   transform: translateY(11%);
 }
 
+#signUp{
+  margin-top: 6%;
+  top:23%;
+  transform: translateY(11%);
+  width: 87px;
+}
+
+#signUpNav{
+  padding-left:0px;
+}
+
+#signUp:hover{
+  color: white !important;
+  text-shadow: none;
+  box-shadow: none;
+  background-color: #f78e81;
+}
+
 #login:hover{
   color: white;
   text-shadow: none;
@@ -85,7 +123,7 @@ a:hover {
 
 #loginDropDown{
   right: 0px;
-  top: 47px;
+  top: 75px;
   contain: content;
 }
 
@@ -149,4 +187,96 @@ h6 {
 .dropdown>.dropdown-toggle:active {
   /*Without this, clicking will make it sticky*/
     pointer-events: none;
+}
+
+/* card styling on front page*/
+#fpCards{
+  margin: 6px !important;
+  width: 18.8% !important;
+  height: 120px !important;
+  
+}
+
+.card-info{
+  height: 50px !important;
+  overflow: hidden;
+  margin-bottom: 0px;
+}
+
+.seeMoreCard a{
+  color: #f78e81
+}
+
+.seeMoreCard a:hover{
+  color: #7596b0;
+}
+
+.seeMoreGT{
+  display: none;
+}
+
+#bottCarHob{
+  margin-right: 2%;
+  margin-left: 2%;
+  align-content: center;
+}
+
+#belowCarousel{
+  display: contents;
+}
+
+/* card styling on hobbies page */
+#hobbyList{
+  background-color: #e0d0c1;
+}
+
+.hobbyLink{
+  font-weight: 600 !important;
+}
+
+.hobbyLink a,
+#addHobby:hover{
+  color: #f78e81;
+}
+
+.hobbyLink a:hover,
+#addHobby{
+  color: #7596b0;
+}
+
+@media screen and (min-width: 1270px) {
+  /* remove cards from front page when full screen */
+  #belowCarousel{
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+
+  /* change cards from front page and replace with shorter boxes */
+  #fpCards{
+    height: 50px !important;
+  }
+
+  .card-info{
+    display: none;
+  }
+  
+  .seeMoreCard{
+    display: none;
+  }
+
+  .seeMoreGT{
+    display: block;
+    float: right;
+    font-weight: 900;
+  }
+
+  .seeMoreGT a{
+    color: #f78e81;
+  }
+
+  .seeMoreGT a:hover{
+    color: #7596b0;
+  }
 }

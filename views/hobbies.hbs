@@ -1,0 +1,35 @@
+<div class="container" id="hobbyList">
+<div class="card-columns" style="margin-top: 5px;">
+<a href="/addhobby">
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="/images/add.png" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body" id="addHobby">
+        <h5 class="card-title">Add A Hobby</h5>
+        <p class="card-text">Don't see your hobby here? Share it with us!</p>
+      </div>
+    </div>
+  </div>
+</div>
+</a>
+    {{#each Hobby}}
+  <div class="card hobbyCard">
+    <a href="/hobbies/{{this.slug}}">
+    <img src="{{this.icon}}" class="card-img-top" alt="...">
+    </a>
+    <div class="card-body">
+      <h5 class="card-title">{{this.name}}</h5>
+      <p class="card-text">{{this.description}}</p>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted hobbyLink" style="display: flow-root; text-align: -webkit-right;"> <a href="/hobbies/{{this.slug}}">Recent Projects &gt;</a></small>
+    </div>
+  </div>
+  {{/each}}
+</div>
+</div>
+<div style="height: 80px; background-color: blue;">
+</div>

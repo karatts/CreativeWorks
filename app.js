@@ -97,59 +97,50 @@ router.get('/', (req, res) => {
 	}
 
 	if(sessID === undefined){
-		res.render('homepage', {noid: true});
+		Hobby.find({}, (err, results, count) => {
+			console.log(results);
+			if(err){
+				console.log(err);
+			}
+			//send 5 random hobbies to the front page
+			var fPH = 0;
+			const frontPageHobbies = [];
+			const intsChosen = [];
+			const shortDes = [];
+			while(fPH<5){
+				const val = Math.floor(Math.random() * (results.length-1));
+				if(!intsChosen.includes(val)){
+					intsChosen[fPH] = val;
+					frontPageHobbies[fPH] = results[val];
+					fPH++;
+				}
+			}
+			res.render('homepage', {noid: true, Hobby: frontPageHobbies});
+		});
 	}
 	else{
 		const sessID2 = sessID.toLowerCase();
-		const winePref = [];
 		User.find({username: sessID2}, (err, result1, count) => {
-			//find user preferences
-			const typeLike = result1[0].type;
-			const sweetnessLen = (result1[0].sweetness).length;
-			if(typeLike.length === 1){ //if there is one type of wine preference
-				//if there is no sweetness preference
-				if(sweetnessLen === 0){
-					findAndAddWine({type: typeLike}, winePref, 6, res, sessID);
-				}
-				//if there is a sweetness preference
-				else{
-					//pick one random sweetness preference
-					let num2 = getNum(0, (sweetnessLen - 1));
-					const sweetPref = (result1[0].sweetness)[num2];
-					findAndAddWine({type: typeLike, sweetness: sweetPref}, winePref, 6, res, sessID);
-				}
-			}
-			else{ //if they like none or both of the types
-				//if they have no preferences, display random from all wines
-				if(sweetnessLen === 0){
-					findAndAddWine({}, winePref, 6, res, sessID);
-				}
-				else{
-				//if they have a sweetness preference, pick one and display those
-					let num2 = getNum(0, (sweetnessLen - 1));
-					const sweetPref = (result1[0].sweetness)[num2];
-					findAndAddWine({sweetness: sweetPref}, winePref, 6, res, sessID);
-				}
-			}
+			res.render('homepage',({id: sessID2}));
 		});
 	}
 });
 
 //register form
 //get - to display the form
-router.get('/register', (req, res) => {
-	console.log('in router.get /register');
+router.get('/signup', (req, res) => {
+	console.log('in router.get /signup');
 	const sessID = req.session.username;
 	if(sessID === undefined){
-		res.render('register', {});
+		res.render('signup', {});
 	}
 	else{
-		res.render('loggedin', {id: sessID});
+		res.render('homepage', {id: sessID});
 	}
 });
 //post - to process the form input
-router.post('/register', (req, res) => {
-	console.log('in router.post /register');
+router.post('/signup', (req, res) => {
+	console.log('in router.post /signup');
 	const testPW = req.body.password;
 	let testUN = req.body.username;
 	User.findOne({username: testUN}, (err, result, count) => {
@@ -159,7 +150,7 @@ router.post('/register', (req, res) => {
 			unerr = true;
 		}
 		if(pwerr || unerr){
-			res.render('register', {error: true, pwerror: pwerr, unerror: unerr});
+			res.render('signup', {error: true, pwerror: pwerr, unerror: unerr});
 		}
 		else{
 			bcrypt.hash(testPW, 10, function(err, hash) {
@@ -238,320 +229,6 @@ router.post('/login', (req, res) => {
 	});
 });
 
-//add a wine to the database!
-router.get('/addawine', (req, res) => {
-	console.log("at router.get /addawine");
-	const sessID = req.session.username;
-	if(sessID === undefined){
-		//not logged in
-		res.redirect('/login');
-	}
-	else{
-		//logged in
-		res.render('addawine', {start: true});
-	}
-});
-
-router.post('/addawine', (req, res) => {
-	console.log("at router.post /addawine");
-	let brand = req.body.brand;
-	brand = capFirst(brand);
-	let name = req.body.name;
-	name = capFirst(name);
-
-	Wine.find({brand: brand, name: name, year: req.body.year}, (err, result, count) =>{
-		if(result.length !== 0){
-			//don't add the wine
-			res.render('addawine', {exists: true, wine: result[0]});
-		}
-		else{
-			let image = "";
-			if(req.body.image === ""){
-				image = "../images/No-image-available.jpg";
-			}
-			else{
-				image = req.body.image;
-			}
-			const newWine = new Wine({
-				brand: brand,
-				name: name,
-				year: req.body.year,
-				type: req.body.type,
-				sweetness: req.body.sweetness,
-				image: image,
-				comments: [],
-				avgrating: 0,
-				numratings: 0,
-			});
-			//add the wine
-			newWine.save((err) =>{
-				if(err){
-					console.log("Error saving new wine...");
-				}
-				else{
-					let addString = req.session.username + " added a " + newWine.year + " " + newWine.name + " from " + newWine.brand + " to the DB! #WineNotDB";
-					client.post('statuses/update', {status: addString},  function(error, tweet, response) {
-  						if(error) throw error;
-				  		//console.log(tweet);  // Tweet body. 
-				  		//console.log(response);  // Raw response object. 
-					});
-
-					res.render('addawine', {success: true, wine: newWine});
-				}
-			});
-		}
-	});
-});
-
-//Wine slug --- WIP
-router.get("/wine/:slug", (req, res) => {
-	let sessID = req.session.username;
-	console.log("at router.get /wine/slug");
-	const slug = req.params.slug;
-	Wine.find({slug: slug}, (err, result, count) => {
-		if(err){
-			console.log("Error at the wine slug page");
-		}
-		else{
-			console.log(result);
-			if(result[0] === undefined){
-				res.render('notvalid', {});
-			}
-			else{
-				if(sessID === undefined){
-					res.render('winepage', {wine: result[0], notlogged: true});
-				}
-				else{
-					sessID = sessID.toLowerCase();
-					res.render('winepage', {wine: result[0], loggedin: true});
-				}
-			}
-		}
-	});
-});
-router.post("/wine/:slug", (req, res) => {
-	console.log('at router.post /wine/slug');
-	const sessID = req.session.username;
-	var wine = "";
-	Wine.findOne({slug: req.params.slug}, (err, result, count) => {
-		if(err){
-			console.log(err);
-		}
-		if(result !== undefined){
-			wine = result;
-			//check to make sure comment is not equal to default text
-			let comment = req.body.comment;
-			//console.log(comment);
-			if(comment !== undefined){
-				const comms = new Comment({
-					username: sessID,
-					comment: comment,
-					rating: req.body.rating,
-				});
-				result.comments.push(comms);
-				//console.log(result);
-				comms.save((err) => {
-					Comment.find({}, (err, results, count) => {
-						const currRating = result.avgrating;
-						//console.log(currRating);
-						const newTot = parseInt(currRating) + parseInt(req.body.rating);
-						//console.log(newTot);
-						const newTotNums = result.numratings + 1;
-						//console.log(newTotNums);
-						const newRating = newTot / newTotNums;
-						//console.log(newRating);
-						result.avgrating = Math.trunc(newRating);
-						result.numratings = newTotNums;
-						result.save((err) => {
-							if(err){
-								console.log(err);
-							}
-							else{
-								res.render('winepage', {wine: result, loggedin: true});
-							}
-						});
-					});
-				});
-			}
-			else{
-				res.render('winepage', {wine: result, loggedin: true, invalidComment: true});
-			}
-		}
-	});
-});
-
-//ALL THE WINE! (WORK ON FORMATTING THE ROWS IF THERE'S TIME)
-router.get('/allthewine', (req, res) => {
-	console.log('in router.get /allthewine');
-	let sessID = req.session.username;
-	if(sessID === undefined){
-		res.redirect('/login');
-	}
-	else{
-		Wine.find({}, (err, results, count) => {
-			if(err){
-				console.log(err);
-			}
-
-			const redWine = results.filter((ele) => {
-				if(ele.type[0] === "Red Wine"){
-					return ele;
-				}
-			});
-
-			const whiteWine = results.filter((ele) => {
-				if(ele.type[0] === "White Wine"){
-					return ele;
-				}
-			});
-			res.render('allthewine', {redWine: redWine, whiteWine: whiteWine});
-		});
-	}
-});
-
-router.get('/suggested', (req, res) => {
-	console.log('in router.get /suggested');
-	let sessID = req.session.username;
-	if(sessID === undefined){
-		res.redirect('/login');
-	}
-	else{
-		sessID = sessID.toLowerCase();
-		User.findOne({username: sessID}, (err, result, count) => {
-			if(result.type.length === 1){
-				//if there's only one type preference
-				if(result.sweetness.length === 0){
-					//if there's no sweetness preference
-					findAndAddWine2({type: result.type[0]}, [], function renderThis(array2){
-						res.render('suggested', {wine: array2});
-					});
-				}
-				else{
-					//there's one or more sweetness preferences
-					findAndAddWine2({type: result.type[0], sweetness: result.sweetness}, [], function renderThis(array2){
-						res.render('suggested', {wine: array2});
-					});
-				}
-			}
-			else{
-				//if there's more than one type preference, just ignore it.
-				if(result.sweetness.length !== 0){
-					findAndAddWine2({sweetness: result.sweetness}, [], function renderThis(array2){
-						res.render('suggested', {wine: array2});
-					});
-				}
-				else{
-					//three's no preferences
-					findAndAddWine2({}, [], function renderThis(array2){
-						res.render('suggested', {wine: array2});
-					});
-				}
-
-			}
-		});
-	}
-});
-
-//search page --- WIP
-router.get('/search', (req, res) => {
-	console.log('in router.get /search');
-	let sessID = req.session.username;
-	if(sessID === undefined){
-		//res.render('search', {notlogged: true});
-		res.render('notyet', {});
-	}
-	else{
-		sessID = sessID.toLowerCase();
-		User.findOne({username: sessID}, (err, result, count) =>{
-			if(result && !err){
-				//res.render('search', {loggedin: true});
-				res.render('notyet', {});
-			}
-			else{
-				console.log(err);
-			}
-		});
-	}
-});
-router.post('/search', (req, res) => {
-	res.render('notyet', {});
-});
-
-//User saved wine lists --- WIP
-router.get('/favorites' , (req, res) => {
-	const sessID = req.session.username;
-	if(sessID === undefined){
-		res.redirect('/login');
-	}
-	else{
-		res.render('notyet', {});
-	}
-});
-router.get('/try_these' , (req, res) => {
-	const sessID = req.session.username;
-	if(sessID === undefined){
-		res.redirect('/login');
-	}
-	else{
-		res.render('notyet', {});
-	}
-});
-router.get('/never_again' , (req, res) => {
-	const sessID = req.session.username;
-	if(sessID === undefined){
-		res.redirect('/login');
-	}
-	else{
-		res.render('notyet', {});
-	}
-});
-
-//preferences
-router.get('/preferences', (req, res) => {
-	let sessID = req.session.username;
-	if(sessID === undefined){
-		res.redirect('/login');
-	}
-	else{
-		sessID = sessID.toLowerCase();
-		User.find({username: sessID}, (err, results, count) =>{
-			if(results && !err){
-				//console.log(results[0]);
-				res.render('preferences', results[0]);
-			}
-			else{
-				console.log('error in app.get /preferences');
-				console.log(err);
-			}
-		});
-	}
-});
-router.post('/preferences', (req, res) => {
-	let sessID = req.session.username;
-	sessID = sessID.toLowerCase();
-	//console.log(sessID);
-	//console.log(req.body.type);
-	//console.log(req.body.sweetness);
-	User.find({username: sessID}, (err, results, count) => {
-		results[0].type = req.body.type;
-		results[0].sweetness = req.body.sweetness;
-		results[0].save((err) => {
-			if(err){
-				console.log(err);
-			}
-			else{
-				//console.log(results[0]);
-				res.render('preferences', results[0]);
-			}
-		})
-	});
-});
-
-//classification image
-app.get('/classifications', (req, res) => {
-	res.sendFile(path.join(__dirname, "public/images", "sweetness.png"));
-});
-
 //logout page
 router.get('/logout', (req, res) => {
 	req.session.destroy((err) => {
@@ -560,6 +237,66 @@ router.get('/logout', (req, res) => {
 		}
 		else{
 			res.redirect('/');
+		}
+	});
+});
+
+//go to hobbies page!
+router.get('/hobbies', (req, res) => {
+	console.log("at router.get /hobbies");
+	const sessID = req.session.username;
+
+	Hobby.find({}, (err, results, count) => {
+		if(err){
+			console.log(err);
+		}
+		if(sessID === undefined){
+			res.render('hobbies', {noid: true, Hobby: results});
+		}
+		else{
+			res.render('hobbies', {id: sessID, Hobby: results});
+		}
+	});
+});
+
+//Hobbies slug --- WIP
+router.get("/hobbies/:slug", (req, res) => {
+	let sessID = req.session.username;
+	console.log("at router.get /hobbies/slug");
+	const slug = req.params.slug;
+	Hobby.find({slug: slug}, (err, result, count) => {
+		if(err){
+			console.log("Error at the hobby slug page");
+		}
+		else{
+			console.log(result);
+			if(result[0] === undefined){
+				//no such hobby page redirect to hobbies page
+				Hobby.find({}, (err, results, count) => {
+					if(err){
+						console.log(err);
+					}
+					if(sessID === undefined){
+						res.render('404', {noid: true});
+					}
+					else{
+						res.render('404', {id: sessID});
+					}
+				});
+			}
+			else{
+				const hobbs = [];
+				const proj = [];
+
+
+				if(sessID === undefined){
+					res.render('hobbiesInd', {noid: true, Hobby: result[0], Projects: proj});
+				}
+				else{
+					sessID = sessID.toLowerCase();
+					res.render('hobbiesInd', {id: sessID, Hobby: result[0], Projects: proj});
+				}
+			}
 		}
 	});
 });
