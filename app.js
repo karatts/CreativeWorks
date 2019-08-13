@@ -31,9 +31,9 @@ const Hobby = mongoose.model("Hobby");
 const Comment = mongoose.model("Comment");
 const Project = mongoose.model("Project");
 
-//User.remove({}, function(err) { 
-//   console.log('collection removed') 
-//});
+/* User.remove({}, function(err) { 
+   console.log('collection removed') 
+}); */
 
 app.use('/', router);
 //-----------------------------------------------------------
@@ -121,7 +121,27 @@ router.get('/', (req, res) => {
 	else{
 		const sessID2 = sessID.toLowerCase();
 		User.find({username: sessID2}, (err, result1, count) => {
-			res.render('homepage',({id: sessID2}));
+			console.log(result1[0].hobbies);
+			Hobby.find({}, (err, results, count) => {
+				//console.log(results);
+				var i;
+				var j;
+				var hobbyList = [];
+				var num = 0;
+				for(i = 0; i<results.length; i++){
+					var currHobby = results[i];
+					console.log(currHobby);
+					for(j = 0; j<result1[0].hobbies.length; j++){
+						if(currHobby.name === result1[0].hobbies[j]){
+							hobbyList[num] = results[i];
+							num++;
+						}
+					}
+					
+				}
+				console.log(hobbyList);
+				res.render('homepage',({id: sessID, hobbies: result1[0].hobbies, hobbyInfo: hobbyList }));
+			});
 		});
 	}
 });
@@ -132,7 +152,9 @@ router.get('/signup', (req, res) => {
 	console.log('in router.get /signup');
 	const sessID = req.session.username;
 	if(sessID === undefined){
-		res.render('signup', {});
+		Hobby.find({}, (err, results, count) => {
+			res.render('signup', {noid: true, hobbies: results});
+		});
 	}
 	else{
 		res.render('homepage', {id: sessID});
@@ -155,13 +177,17 @@ router.post('/signup', (req, res) => {
 		else{
 			bcrypt.hash(testPW, 10, function(err, hash) {
 				testUN = testUN.toLowerCase();
+				console.log(req.body);
+				var date = new Date();
 				const usr = new User({
 					username: testUN,
 					fname: req.body.fname,
 					lname: req.body.lname,
 					password: hash,
-					type: req.body.type,
-					sweetness: req.body.sweetness,
+					joinDate: date,
+  					bio: "default bio",
+  					hobbies: req.body.hobbies,
+  					friends: ["admin"]
 				});
 				usr.save((err) => {
 					if(err){
@@ -199,14 +225,12 @@ router.post('/login', (req, res) => {
 	let name = req.body.username;
 	name = name.toLowerCase();
 	User.findOne({username: name}, (err, result, count) => {
-		const userlog = {unerror: false, pwerror: false};
 		if(result && !err){
 			//test password now
 			bcrypt.compare(req.body.password, result.password, (err, result) =>{
 				if(!result){
 					console.log('Invalid password');
-					userlog.pwerror = true;
-					res.render('login', userlog);
+					res.render('login', {error: true});
 				}
 				else{
 					//start an authenticated session
@@ -223,8 +247,7 @@ router.post('/login', (req, res) => {
 			});
 		}
 		else{
-			userlog.unerror = true;
-			res.render('login', userlog);
+			res.render('login', {error: true});
 		}
 	});
 });

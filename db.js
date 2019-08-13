@@ -33,9 +33,9 @@ const User = new mongoose.Schema({
   password: String,
   joinDate: Date,
   bio: String,
-  hobbies: [Hobby],
+  hobbies: [String],
   friends: [String],
-  projects: [Project]
+  projects: [Project] //not used
 });
 
 Project.plugin(URLSlugs('id'));
