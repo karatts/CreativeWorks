@@ -324,6 +324,18 @@ router.get("/hobbies/:slug", (req, res) => {
 	});
 });
 
+router.get("/user/:slug", (req, res) => {
+	let sessID = req.session.username;
+	console.log("at router.get /user/slug");
+	const slug = req.params.slug;
+	console.log(slug);
+	const sessID2 = sessID.toLowerCase();
+	User.find({username: sessID2}, (err, result1, count) => {
+		console.log(result1[0]);
+		res.render('profile', {id: sessID2, user: result1[0]});
+	});
+});
+
 //--------------------------------
 
 //listen on port 3000

@@ -2,69 +2,78 @@
     body{
         background-color: #e0d0c1 !important;
     }
-    .card-header{  
-        font-weight: 700;
-        text-align: center;
-    }
 
     .card{
         margin: 4px;
+        margin-bottom: 10px;
+    }
+
+    #hobbyHeader{
+        font-weight: 600;
+        font-size: x-large;
+        font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;  
+        color: #433e39;
+    }
+
+    #pages a{
+        color: #7596b0;
     }
 </style>
 
 <div class="container">
     <div class="row" style="margin: 2%;">
-        <div class="col-6" id="hobbyCard">
-            <div class="card" style="width: 100%;">
-                <img src="{{Hobby.icon}}" class="card-img-top" alt="..." id="hobbyImg">
-                <div class="card-header">{{Hobby.name}}</div>
-                <div class="card-body">
-                    <p class="card-text">{{Hobby.description}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
+        <div class="row" id="hobbyHeader">{{Hobby.name}} </div>
             <div class="row">
-                <div class="col-6 proj">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-4 proj">
+                    <div class="card" style="width: 95%;">
                     <img src="../images/noimg.jpg" class="card-img-top" alt="...">
-                    <div class="card-header">Project 1</div>
-                    <div class="card-body">
-    <p class="card-text">Bacon ipsum dolor amet shank chicken porchetta, meatball ham hock short loin cupim boudin jerky short ribs picanha. </p>
-    <p class="card-text"><small class="text-muted">Created by: Sarah</small><br><small class="text-muted">Last updated 3 mins ago</small></p>
- </div>
                     </div>
                 </div>
-                <div class="col-6 proj">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-4 proj">
+                    <div class="card" style="width: 95%;">
                     <img src="../images/noimg.jpg" class="card-img-top" alt="...">
-                    <div class="card-header">Project 2</div>
-                    <div class="card-body">
-    <p class="card-text">Bacon ipsum dolor amet shank chicken porchetta, meatball ham hock short loin cupim boudin jerky short ribs picanha. </p>
-    <p class="card-text"><small class="text-muted">Created by: Sarah</small><br><small class="text-muted">Last updated 3 mins ago</small></p>
- </div>
                     </div>
                 </div>
-                <div class="col-6 proj">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-4 proj">
+                    <div class="card" style="width: 95%;">
                     <img src="../images/noimg.jpg" class="card-img-top" alt="...">
-                    <div class="card-header">Project 3</div>
-                    <div class="card-body">
-    <p class="card-text"><small class="text-muted">Created by: Sarah</small><br><small class="text-muted">Last updated 3 mins ago</small></p>
- </div>
                     </div>
                 </div>
-                <div class="col-6 proj">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-4 proj">
+                    <div class="card" style="width: 95%;">
                     <img src="../images/noimg.jpg" class="card-img-top" alt="...">
-                    <div class="card-header">Project 4</div>
-                    <div class="card-body">
-    <p class="card-text"><small class="text-muted">Created by: Sarah</small><br><small class="text-muted">Last updated 3 mins ago</small></p>
- </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-4 proj">
+                    <div class="card" style="width: 95%;">
+                    <img src="../images/noimg.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
+                <div class="col-4 proj">
+                    <div class="card" style="width: 95%;">
+                    <img src="../images/noimg.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
         </div>
     </div>
+    <div id="pages">
+            <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+        </div>
 </div>
 <div class="container" style="height:80px; color: blue;"></div>

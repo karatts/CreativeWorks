@@ -61,87 +61,117 @@
 {{/if}}
 
 {{#if id}}
-<div class="container">
-  <div class="container">
-  You are following: <a href="#" class="badge badge-info">All</a>
-  {{#each hobbyInfo}}
-  <a href="/hobbies/{{this.slug}}" class="badge badge-info">{{this.name}}</a>
-  {{/each}}
+
+<style>
+  #recentpop{
+    background-color: #e0d0c1;
+    margin-bottom: 16px;
+    padding: 3px;
+}
+
+  #followingBadges a{
+    color: #7596b0;
+  }
+
+  #followingBadges a:hover{
+    color: #f78e81;
+  }
+
+  #followingHeader{
+    font-weight: 500;
+    color: black;
+    padding: 7px;
+  }
+
+  .list-group-item{
+    padding: 7px !important;
+  }
+
+  .popPost{
+    margin-bottom: 10px;
+  }
+
+  .tag{
+    float: right;
+  }
+
+  #popHeader{
+    font-weight: 600;
+    font-size: x-large;
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;  
+    color: #433e39; 
+  }
+</style>
+
+<div class="container homePageInternal">
+  <div class="container rounded" id="recentpop"></div>
+  <div class="row"><div class="col-3"></div><div id="popHeader">Recent Posts</div><div class="col-3"></div>
+<div class="container row" style="margin-top: 10px;">
+  <div class="col-3">
+    <div class="container" id="followingBadges">
+<div class="card" style="width: 100%;">
+  <div class="card-header" id="followingHeader">
+    Following:
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"> <a href="/hobbies" >All</a> </li>
+    {{#each hobbyInfo}}
+    <li class="list-group-item"> <a href="/hobbies/{{this.slug}}" >{{this.name}}</a> </li>
+    {{/each}}
+  </ul>
 </div>
-<div class="container" style="margin-top: 10px;">
-<div class="card mb-3" style="max-width: 100%; height: 130px; overflow: hidden;">
-  <div class="row no-gutters">
-    <div class="col-2">
-      <img src="../images/Projects/S10.jpg" class="card-img" alt="..." style="height: 100%">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>
-      </div>
-    </div>
+
+</div>
+  </div>
+
+    <div class="col-6">
+
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S10.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By Admin</small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>
   </div>
 </div>
 
-<div class="card mb-3" style="max-width: 100%; height: 130px; overflow: hidden;">
-  <div class="row no-gutters">
-    <div class="col-2">
-      <img src="../images/Projects/S5.jpg" class="card-img" alt="..." style="height: 100%">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        <p><a href="/hobbies/knitting" class="badge badge-secondary">Knitting</a></p>
-      </div>
-    </div>
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S5.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By Admin</small></p>
+    <p><a href="/hobbies/knitting" class="badge badge-secondary">Knitting</a></p>  
   </div>
 </div>
 
-<div class="card mb-3" style="max-width: 100%; height: 130px; overflow: hidden;">
-  <div class="row no-gutters">
-    <div class="col-2">
-      <img src="../images/Projects/S6.jpeg" class="card-img" alt="..." style="height: 100%">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>
-      </div>
-    </div>
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S6.jpeg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By Admin</small></p>
+    <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>  
   </div>
 </div>
 
-<div class="card mb-3" style="max-width: 100%; height: 130px; overflow: hidden;">
-  <div class="row no-gutters">
-    <div class="col-2">
-      <img src="../images/Projects/S7.jpg" class="card-img" alt="..." style="height: 100%">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>
-      </div>
-    </div>
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S7.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By Admin</small></p>
+    <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>  
   </div>
 </div>
 
-<div class="card mb-3" style="max-width: 100%; height: 130px; overflow: hidden;">
-  <div class="row no-gutters">
-    <div class="col-2">
-      <img src="../images/Projects/S8.jpg" class="card-img" alt="..." style="height: 100%">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>
-      </div>
-    </div>
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S8.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By Admin</small></p>
+    <p><a href="/hobbies/baking" class="badge badge-secondary">Baking</a></p>  
   </div>
+</div>
+
+</div>
+<div class="col-3">
 </div>
 </div>
 <div style="height:80px"></div>
