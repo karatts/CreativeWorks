@@ -344,6 +344,33 @@ router.get("/user/:slug", (req, res) => {
 	}
 });
 
+router.get("/update-profile", (req, res) => {
+	let sessID = req.session.username;
+
+	if(sessID === undefined){
+		attemptToView = true;
+		res.redirect("/login");
+	}
+	else{
+		console.log("at router.get /settings");
+		const slug = req.params.slug;
+		console.log(slug);
+		const sessID2 = sessID.toLowerCase();
+		User.find({username: sessID2}, (err, result1, count) => {
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log(result1[0]);
+			res.render('settings', {id: sessID2, user: result1[0]});
+			}
+		});
+	}
+});
+router.post("/update-profile", (req, res) => {
+
+});
+
 router.get("/settings", (req, res) => {
 	let sessID = req.session.username;
 
