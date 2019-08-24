@@ -1,13 +1,16 @@
 ## Site Pages
 ### Homepage
-Fullscreen Homepage
+#### Fullscreen Homepage
 ![HomepageFull](/GitHubPics/HomepageFull.PNG)
 
-Midsized Homepage
+#### Midsized Homepage
 ![HomepageMid](/GitHubPics/HomepageMid.PNG)
 
-Small Homepage
+#### Small Homepage
 ![HomepageSmall](/GitHubPics/HomepageSmall.PNG)
+
+#### Internal Homepage
+![HomepageInternal](/GitHubPics/HomepageInternal.PNG)
 
 ### Sign Up
 ![SignUp](/GitHubPics/SignUp.PNG)
@@ -17,3 +20,9 @@ Small Homepage
 
 ### Hobbies
 ![Hobbies](/GitHubPics/Hobbies.PNG)
+
+### Alternate Homepages
+#### v1
+![HomepageV1](/GitHubPics/Homepagev1.PNG)
+#### v2
+![HomepageV2](/GitHubPics/Homepagev2.PNG)
