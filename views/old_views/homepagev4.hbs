@@ -1,0 +1,183 @@
+{{#if noid}}
+<div class="container" id="carousel">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="/images/slide-image-2.jpg" alt="First slide">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Share Your Work</h5>
+        <p>Think your work is great? We do too! Share it with the CreativeWorks community!</p>
+        <br>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="/images/slide-image-1.jpg" alt="Second slide">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Find your inspiration.</h5>
+        <p>Join the CreativeWorks community, home to numerous hobbies and even more enthusiasts.</p>
+        <br>
+        <a href="/signup" role="button" tabindex="-1" class="btn btn-outline-light" id="signUpCarousel" style="box-shadow: none; text-shadow: none;">Join Today</a>
+        <br><br>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="/images/slide-image-3.jpg" alt="Third slide">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Explore New Interests</h5>
+        <p>Check out work from other users and discover a new passion.</p>
+        <br>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
+<div class="container" id="belowCarousel">
+  <center><h5>Some of the Communities Our Users Love</h5></center>
+  <div class="row" id="bottCarHob">
+  {{#each Hobby}}
+  <div class="card" id="fpCards" style="width: 12rem; background-color: #f6f5f3 !important;">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted">{{this.name}} <span class="seeMoreGT"><a href="/hobbies/{{this.slug}}">&gt;</a></span></h6>
+    <p class="card-info">{{this.description}}</p>
+    <span class="seeMoreCard">... <a href="/hobbies/{{this.slug}}">read more</a></span>
+  </div>
+</div>
+{{/each}}
+</div>
+</div>
+{{/if}}
+
+{{#if id}}
+
+<style>
+  #recentpop{
+    background-color: #e0d0c1;
+    margin-bottom: 16px;
+    padding: 3px;
+}
+
+  #followingBadges a{
+    color: #7596b0;
+  }
+
+  #followingBadges a:hover{
+    color: #f78e81;
+  }
+
+  #followingHeader{
+    font-weight: 500;
+    color: black;
+    padding: 7px;
+  }
+
+  .list-group-item{
+    padding: 7px !important;
+  }
+
+  .popPost{
+    margin-bottom: 10px;
+  }
+
+  .tag{
+    float: right;
+  }
+
+  #popHeader{
+    font-weight: 600;
+    font-size: x-large;
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;  
+    color: #433e39; 
+  }
+
+  .userlink{
+    color: #7596b0;
+  }
+
+  .userlink:hover{
+    color: #f78e81;
+  }
+</style>
+
+<div class="container homePageInternal">
+  <div class="container rounded" id="recentpop"></div>
+  <div class="row"><div class="col-3"></div><div id="popHeader">Recent Posts</div><div class="col-3"></div>
+<div class="container row" style="margin-top: 10px;">
+  <div class="col-3">
+    <div class="container" id="followingBadges">
+<div class="card" style="width: 100%;">
+  <div class="card-header" id="followingHeader">
+    Following:
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"> <a href="/hobbies" >All</a> </li>
+    {{#each hobbies}}
+    <li class="list-group-item"> <a href="/hobbies/{{this.slug}}" >{{this}}</a> </li>
+    {{/each}}
+  </ul>
+</div>
+
+</div>
+  </div>
+
+    <div class="col-6">
+
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S10.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>
+  </div>
+</div>
+
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S5.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/knitting" class="badge badge-secondary tag">Knitting</a></p>  
+  </div>
+</div>
+
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S6.jpeg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>  
+  </div>
+</div>
+
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S7.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>  
+  </div>
+</div>
+
+<div class="card popPost" style="width: 100%;">
+  <img src="../images/Projects/S8.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>  
+  </div>
+</div>
+
+</div>
+<div class="col-3">
+</div>
+</div>
+</div>
+<div style="height:80px"></div>
+{{/if}}

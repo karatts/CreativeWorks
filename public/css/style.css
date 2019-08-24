@@ -251,6 +251,13 @@ h6 {
   }
 }
 
+@media screen and (max-width: 1040px) {
+  /* remove cards from front page when full screen */
+  #belowCarousel{
+    display: none;
+  }
+}
+
 @media screen and (min-width: 1150px) {
 
   /* change cards from front page and replace with shorter boxes */

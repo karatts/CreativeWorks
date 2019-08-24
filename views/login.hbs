@@ -43,6 +43,13 @@
     #forgotpw a:hover{
         color: #7596b0;
     }
+
+    #loginToView{
+        position: absolute;
+        margin: auto;
+        margin-left: 34%;
+        margin-top: 5%;
+    }
 </style>
 
 <div class="container" id="newHeader">
@@ -54,6 +61,11 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
+            {{#if notLogged}} 
+            <div class="alert alert-primary" id="loginToView" role="alert">
+                Please login to view that page.
+            </div>
+        {{/if}}
     <div class="jumbotron" id="signInJumbo">
     <div class="container" style="text-align: center;">
         <img src="/images/icon.png" style="height: 75px;"><h2>Login</h2>

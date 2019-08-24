@@ -63,121 +63,126 @@
 {{#if id}}
 
 <style>
-  #recentpop{
-    background-color: #e0d0c1;
-    margin-bottom: 16px;
-    padding: 3px;
+  .vertical-text {
+	transform: rotate(270deg);
+	transform-origin: left top 0;
+  }
+
+  #headerImage{
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  #belowHeaderImage{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 230px;
+  }
+  
+  #recPopHeader{
+    margin-top: 13%;
+    margin-left: 15px;
+    font-weight: 500;
+    color: #f78e81;
+  }
+
+  .popPosts {
+    position: relative;
+    float: left;
+    width: 200px;
+    height: 200px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 5px;
+  }
+
+  .popPostInfo{
+    background-color:black;
+    color: white;
+    opacity: 0.7;
+    position: absolute;
+    bottom: 0;
+    text-align: left;
+    width: 100%;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .popPostInfo:hover{
+    font-weight: bold;
+  }
+
+  .userLink:hover {
+    color: #f78e81;
+  }
+
+  .userLink{
+    color: #7596b0;
+    font-style: italic;
+  }
+
+  .headerLink{
+    font-variant: small-caps;
+    color: white;
+  }
+
+  .headerLink:hover{
+    text-decoration: none;
+    color: white;
+  }
+
+  .badge-pillv2 {
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+    padding-bottom: 4px !important;
+    height: fit-content !important;
+    margin: 2px !important;
+    border-radius: 10rem !important;
+    background-color: #666666 !important;
+  }
+
+  #following{
+    margin-left: 0px;
+  }
+
+  @media screen and (max-width: 1230px) {
+  /* remove cards from front page when full screen */
+  .popPosts {
+    width: 175px;
+    height: 175px;
+    margin-top: 19px;
+  }
+
+  #recPopHeader{
+    margin-top: 15%;
+  }
 }
 
-  #followingBadges a{
-    color: #7596b0;
-  }
-
-  #followingBadges a:hover{
-    color: #f78e81;
-  }
-
-  #followingHeader{
-    font-weight: 500;
-    color: black;
-    padding: 7px;
-  }
-
-  .list-group-item{
-    padding: 7px !important;
-  }
-
-  .popPost{
-    margin-bottom: 10px;
-  }
-
-  .tag{
-    float: right;
-  }
-
-  #popHeader{
-    font-weight: 600;
-    font-size: x-large;
-    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;  
-    color: #433e39; 
-  }
-
-  .userlink{
-    color: #7596b0;
-  }
-
-  .userlink:hover{
-    color: #f78e81;
-  }
 </style>
 
-<div class="container homePageInternal">
-  <div class="container rounded" id="recentpop"></div>
-  <div class="row"><div class="col-3"></div><div id="popHeader">Recent Posts</div><div class="col-3"></div>
-<div class="container row" style="margin-top: 10px;">
-  <div class="col-3">
-    <div class="container" id="followingBadges">
-<div class="card" style="width: 100%;">
-  <div class="card-header" id="followingHeader">
-    Following:
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"> <a href="/hobbies" >All</a> </li>
+<div class="container" id="headerImage">
+  <img src="/images/homepage.jpeg" class="img-fluid" alt="Responsive image" style="width: 100%;">
+</div>
+<div class="container" id="belowHeaderImage">
+  <div class="row" id="following">
+    You are following: <a href="/hobbies" class="badge badge-pill badge-pillv2 badge-info">All</a>
     {{#each hobbyInfo}}
-    <li class="list-group-item"> <a href="/hobbies/{{this.slug}}" >{{this.name}}</a> </li>
+      <a href="/hobbies/{{this.slug}}" class="badge badge-pill badge-pillv2 badge-info">{{this.name}}</a>
     {{/each}}
-  </ul>
-</div>
-
-</div>
   </div>
-
-    <div class="col-6">
-
-<div class="card popPost" style="width: 100%;">
-  <img src="../images/Projects/S10.jpg" class="card-img-top">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>
+  <div class="row">
+    <div class="vertical-text" id="recPopHeader">Recent Popular Posts</div>
+    <div id="popPostsCenter">
+      <div class="popPosts" style="background-image: url('/images/Projects/S9.jpg');"> <div class="popPostInfo"> <a href="/" class="headerLink">Chocolate Covered Strawberries and Roses</a> <br> By <a href="/user/test" class="userLink">test</a></div> </div>
+      <div class="popPosts" style="background-image: url('/images/Projects/S4.jpg');"> <div class="popPostInfo"> <a href="/" class="headerLink">Nature Embroidery</a> <br> By <a href="/user/test" class="userLink">test</a></div> </div>
+      <div class="popPosts" style="background-image: url('/images/Projects/S5.jpg');"> <div class="popPostInfo"> <a href="/" class="headerLink">Knitting Haul</a> <br> By <a href="/user/test" class="userLink">test</a></div> </div>
+      <div class="popPosts" style="background-image: url('/images/Projects/S6.jpeg');"> <div class="popPostInfo"> <a href="/" class="headerLink">Fluffy Chocolate Chip Cookies</a> <br> By <a href="/user/test" class="userLink">test</a></div> </div>
+      <div class="popPosts" style="background-image: url('/images/Projects/S1.jpg');"> <div class="popPostInfo"> <a href="/" class="headerLink">Lavender</a> <br> By <a href="/user/test" class="userLink">test</a></div> </div>
+    </div>
   </div>
 </div>
 
-<div class="card popPost" style="width: 100%;">
-  <img src="../images/Projects/S5.jpg" class="card-img-top">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/knitting" class="badge badge-secondary tag">Knitting</a></p>  
-  </div>
-</div>
-
-<div class="card popPost" style="width: 100%;">
-  <img src="../images/Projects/S6.jpeg" class="card-img-top">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>  
-  </div>
-</div>
-
-<div class="card popPost" style="width: 100%;">
-  <img src="../images/Projects/S7.jpg" class="card-img-top">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>  
-  </div>
-</div>
-
-<div class="card popPost" style="width: 100%;">
-  <img src="../images/Projects/S8.jpg" class="card-img-top">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text"><small class="text-muted">Posted By <a href="/user/test" class="userlink">test</a></small><a href="/hobbies/baking" class="badge badge-secondary tag">Baking</a></p>  
-  </div>
-</div>
-
-</div>
-<div class="col-3">
-</div>
-</div>
-</div>
-<div style="height:80px"></div>
+<div style="height:80px;"></div>
 {{/if}}

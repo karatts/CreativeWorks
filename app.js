@@ -84,6 +84,7 @@ function addGeneralHobbies(){
 //-----------------------------------------------------------
 
 let start = true;
+let attemptToView = false;
 
 //home page
 router.get('/', (req, res) => {
@@ -215,7 +216,8 @@ router.get('/login', (req, res) => {
 	console.log('in app.get /login');
 	const sessID = req.session.username;
 	if(sessID === undefined){
-		res.render('login', {});
+		res.render('login', {notLogged: attemptToView});
+		attemptToView = false;
 	}
 	else{
 		res.render('loggedin', {id: sessID});
@@ -329,11 +331,78 @@ router.get("/user/:slug", (req, res) => {
 	console.log("at router.get /user/slug");
 	const slug = req.params.slug;
 	console.log(slug);
-	const sessID2 = sessID.toLowerCase();
-	User.find({username: sessID2}, (err, result1, count) => {
-		console.log(result1[0]);
-		res.render('profile', {id: sessID2, user: result1[0]});
-	});
+	if(sessID === undefined){
+		attemptToView = true;
+		res.redirect("/login");
+	}
+	else{
+		const sessID2 = sessID.toLowerCase();
+		User.find({username: sessID2}, (err, result1, count) => {
+			console.log(result1[0]);
+			res.render('profile', {id: sessID2, user: result1[0]});
+		});
+	}
+});
+
+router.get("/settings", (req, res) => {
+	let sessID = req.session.username;
+
+	if(sessID === undefined){
+		attemptToView = true;
+		res.redirect("/login");
+	}
+	else{
+		console.log("at router.get /settings");
+		const slug = req.params.slug;
+		console.log(slug);
+		const sessID2 = sessID.toLowerCase();
+		User.find({username: sessID2}, (err, result1, count) => {
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log(result1[0]);
+			res.render('settings', {id: sessID2, user: result1[0]});
+			}
+		});
+	}
+});
+router.post("/settings", (req, res) => {
+
+});
+
+//------------ OLD VERSIONS OF PAGES -------------
+
+router.get("/home/v1", (req, res) => {
+	let sessID = req.session.username;
+
+	if(sessID === undefined){
+		attemptToView = true;
+		res.redirect("/login");
+	}
+	else{
+		const sessID2 = sessID.toLowerCase();
+		User.find({username: sessID2}, (err, result1, count) => {
+			console.log(result1[0].hobbies);
+			res.render('old_views/homepagev1',({id: sessID, hobbies: result1[0].hobbies }));
+		});
+	}
+});
+
+router.get("/home/v2", (req, res) => {
+	let sessID = req.session.username;
+
+	if(sessID === undefined){
+		attemptToView = true;
+		res.redirect("/login");
+	}
+	else{
+		const sessID2 = sessID.toLowerCase();
+		User.find({username: sessID2}, (err, result1, count) => {
+			console.log(result1[0].hobbies);
+			res.render('old_views/homepagev4',({id: sessID, hobbies: result1[0].hobbies}));
+		});
+	}
 });
 
 //--------------------------------
